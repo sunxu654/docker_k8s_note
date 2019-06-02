@@ -1,7 +1,6 @@
 >原创笔记  转载请先征求本人同意 
 
 # docker_k8s_note
-docker和k8s的学习笔记
 
 # docker的原理与使用
 
@@ -10,7 +9,7 @@ docker和k8s的学习笔记
 
 ### 传统的容器技术是虚拟机技术,它的虚拟化方式有两种
 
-1. 在宿主机上虚拟出多个内核,在内核上分别创建虚拟机;****
+1. 在宿主机上虚拟出多个内核,在内核上分别创建虚拟机;
 2. 直接在硬件资源上创建内核(跳过宿主机系统),在内核上创建虚拟机;
 
 
@@ -21,7 +20,7 @@ docker和k8s的学习笔记
 
 命名空间的分类如图:
 ![](https://i.imgur.com/GyorsNf.jpg)
-因为用户命名空间在linux的支持版本较晚,也据定了centos6的内核版本不适合用docker,即使高版本内核可用,但也很不稳定;
+因为用户命名空间在linux的支持版本较晚,也据定了centos6的内核版本不适合用docker,即使高版本内核可用也很不稳定;
 
 因为虚拟机技术的资源浪费,由此诞生了第一种使用同一个内核,而不需要再分离出多个内核(节省资源)的容器技术Linux Container
 LXC技术是利用自己创建的模板,对内核进行命名空间的划分,然后生成一个容器,在容器内运行多个进程,但这样有一个缺点是生成的容器内的数据很难迁移,模板生成也十分复杂;
@@ -36,7 +35,7 @@ docker在**一个容器中只运行一个进程**,进程之间通过容器的方
 
 **docker可以将容器打包,它不再依赖内核的命名空间,而是拥有自己独立的命名空间,就使得自己的运行环境完全独立于平台,就实现了分发镜像的极大便利;**
 
-docker的联合挂在机制(极大的优点)
+docker的联合挂载机制(极大的优点)
 ![](https://i.imgur.com/cggenCn.jpg)
 
 ### docker杂谈
@@ -69,6 +68,7 @@ docker register: docker仓库 (用来存放镜像) + 用户认证功能
 
 ### docker安装杂记
 
+
 清华镜像站里面可以查看镜像的内部文件
 可以从centos7中发现,cent7的extras中带有一个老版本docker
 ![](https://i.imgur.com/7OcTbKR.jpg) 
@@ -77,8 +77,26 @@ docker register: docker仓库 (用来存放镜像) + 用户认证功能
 也可以从清华镜像站中,找到docker-ce镜像:
 ![](https://i.imgur.com/3CUOmzz.jpg)
 
-### docker 常用命令
+### docker 常用命令:
+
 ![](https://i.imgur.com/e0L05uf.jpg)
 
 ### 可以选择的镜像标签:
+
 ![](https://i.imgur.com/9q30KdP.jpg)
+
+alpine:是轻量版,缺少测试工具,不建议使用
+
+### docker的虚拟网络
+
+![](https://i.imgur.com/mCmgWe9.jpg)
+![](https://i.imgur.com/amxF17N.jpg)
+
+### docker的基本使用
+
+![](https://i.imgur.com/jBYZSbH.jpg )
+
+`你好` `java`
+```
+	echo "hello GitHub" #Bash
+```
