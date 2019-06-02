@@ -95,8 +95,7 @@ alpine:是轻量版,缺少测试工具,不建议使用
 ### docker的基本使用
 
 ![](https://i.imgur.com/jBYZSbH.jpg )
+### docker镜像的底层原理
 
-`你好` `java`
-```
-	echo "hello GitHub" #Bash
-```
+![](https://i.imgur.com/ZfHdJ3R.jpg)
+![](https://i.imgur.com/ZGruNMu.jpg)
