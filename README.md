@@ -98,4 +98,5 @@ alpine:是轻量版,缺少测试工具,不建议使用
 ### docker镜像的底层原理
 
 ![](https://i.imgur.com/ZfHdJ3R.jpg)
-![](https://i.imgur.com/ZGruNMu.jpg)
+
+# 测试github与码云的同步
