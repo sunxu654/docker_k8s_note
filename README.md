@@ -99,4 +99,52 @@ alpine:是轻量版,缺少测试工具,不建议使用
 
 ![](https://i.imgur.com/ZfHdJ3R.jpg)
 
-# 测试github与码云的同步
+## docker 制作镜像
+
+![](https://i.imgur.com/lb6uT07.jpg)
+
+### 基于容器制作镜像
+
+```linux
+[root@sx ~]# docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS              PORTS                    NAMES
+27c586590860        centos              "/bin/bash"              About a minute ago   Up 59 seconds                                cent7
+2685adbf571c        redis               "docker-entrypoint.s…"   5 hours ago          Up 5 hours          0.0.0.0:6379->6379/tcp   redis63
+[root@sx ~]# docker commit cent7 sunxuxu/mycentos7:v1
+sha256:fbf50e3ebc88857d42f3ee8a8c455f05e5e8526595d295f5c94f3f86d5f6add5
+[root@sx ~]# docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+sunxuxu/mycentos7   v1                  fbf50e3ebc88        15 seconds ago      202MB
+rabbitmq            management          476495614692        11 days ago         194MB
+redis               alpine              72e76053ebb7        2 weeks ago         50.9MB
+redis               latest              d3e3588af517        2 weeks ago         95MB
+centos              latest              9f38484d220f        2 months ago        202MB
+registry            latest              f32a97de94e1        2 months ago        25.8MB
+hello-world         latest              fce289e99eb9        5 months ago        1.84kB
+[root@sx ~]# docker tag fbf50e3ebc88 sunxu/mycent:v2
+[root@sx ~]# docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+sunxuxu/mycentos7   v1                  fbf50e3ebc88        54 seconds ago      202MB
+sunxu/mycent        v2                  fbf50e3ebc88        54 seconds ago      202MB
+rabbitmq            management          476495614692        11 days ago         194MB
+redis               alpine              72e76053ebb7        2 weeks ago         50.9MB
+redis               latest              d3e3588af517        2 weeks ago         95MB
+centos              latest              9f38484d220f        2 months ago        202MB
+registry            latest              f32a97de94e1        2 months ago        25.8MB
+hello-world         latest              fce289e99eb9        5 months ago        1.84kB
+```
+### docker镜像与TAG的硬链接原理
+
+![](https://i.imgur.com/W5G8f3P.jpg)
+
+### 将镜像push到仓库中
+**push的 账号/镜像名:TAG   应该与账号和远程仓库名对应**
+![](https://i.imgur.com/BaJwVuM.jpg)
+
+### 镜像的导入导出
+
+跨过pull 镜像,在两台服务器间传递打包的文件(不常用)
+
+![](https://i.imgur.com/i2m8Ue3.jpg)
+
+
