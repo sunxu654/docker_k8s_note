@@ -61,16 +61,13 @@ docker register: docker仓库 (用来存放镜像) + 用户认证功能
 
 ### 镜像仓库的存放准则
 
-一个镜像仓库只存放一个应用程序的不同版本镜像,比如nginx的不同版本
-
-如图所示:
+#### 一个镜像仓库只存放一个应用程序的不同版本镜像,比如nginx的不同版本
 ![](https://i.imgur.com/ToQhqI0.jpg)
 
 ### docker安装杂记
 
 
-清华镜像站里面可以查看镜像的内部文件
-可以从centos7中发现,cent7的extras中带有一个老版本docker
+####清华镜像站里面可以查看镜像的内部文件 可以从centos7中发现,cent7的extras中带有一个老版本docker
 ![](https://i.imgur.com/7OcTbKR.jpg) 
 
 
@@ -138,13 +135,42 @@ hello-world         latest              fce289e99eb9        5 months ago        
 ![](https://i.imgur.com/W5G8f3P.jpg)
 
 ### 将镜像push到仓库中
-**push的 账号/镜像名:TAG   应该与账号和远程仓库名对应**
+#### push的 账号/镜像名:TAG   应该与账号和远程仓库名对应
 ![](https://i.imgur.com/BaJwVuM.jpg)
 
 ### 镜像的导入导出
 
-跨过pull 镜像,在两台服务器间传递打包的文件(不常用)
+#### 跨过pull 镜像,在两台服务器间传递打包的文件(不常用)
 
 ![](https://i.imgur.com/i2m8Ue3.jpg)
 
 
+## 容器的虚拟网络模型
+#### 容器的四种虚拟网络模型
+
+![](https://i.imgur.com/xv2oaXd.jpg)
+
+### bridge模型
+![](https://i.imgur.com/TCnBBzn.jpg)
+
+#### 容器的虚拟网卡与docker0相连
+
+
+![](https://i.imgur.com/4ruwDP8.jpg)
+
+#### 可以看到有三个容器的网卡与docker0相连
+![](https://i.imgur.com/0wu5Llz.jpg)
+![](https://i.imgur.com/B0KgT18.jpg)
+```
+docker run -it --name containername  --network bridge  -h sunxu.com --dns 8.8.8.8 --rm image:tag
+#network  指定网络模式 还有none host
+#-h 指定docker容器的主机名
+#dns 指定docker容器的dns服务器
+
+#上面的参数可以在docker容器的 /etc/resolv.conf中找到
+```
+### docker容器暴露端口
+docker run -it --name test -p 192.168.30.70:5432:5432 redis
+![](https://i.imgur.com/V11fPXQ.jpg)
+
+![](https://i.imgur.com/rOamxv6.jpg)
