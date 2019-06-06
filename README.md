@@ -169,8 +169,58 @@ docker run -it --name containername  --network bridge  -h sunxu.com --dns 8.8.8.
 
 #上面的参数可以在docker容器的 /etc/resolv.conf中找到
 ```
-### docker容器暴露端口
+### docker容器桥接模式暴露端口
 docker run -it --name test -p 192.168.30.70:5432:5432 redis
 ![](https://i.imgur.com/V11fPXQ.jpg)
-
 ![](https://i.imgur.com/rOamxv6.jpg)
+#### 修改docker0(docker daemon)的ip地址
+```
+vim /etc/docker/daemon.json
+
+{
+"bip":"10.0.0.1/16"
+}
+
+
+systemctl restart docker.service
+
+[root@sx ~]# ifconfig
+docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        inet 10.0.0.1  netmask 255.255.0.0  broadcast 10.0.255.255
+        ether 02:42:d8:a7:41:03  txqueuelen 0  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+ens33: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.245.4  netmask 255.255.255.0  broadcast 192.168.245.255
+        inet6 fe80::d4f2:8d5f:bf2:dbf0  prefixlen 64  scopeid 0x20<link>
+        ether 00:0c:29:90:e6:8d  txqueuelen 1000  (Ethernet)
+        RX packets 452  bytes 43605 (42.5 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 317  bytes 50079 (48.9 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+
+
+```
+
+
+### docker容器共享模式
+#### 容器间共享ip
+```
+开启container1
+docker run -it --name net1 --rm busybox
+开启container2 并把ip挂到net1上面
+docker run -it --name net2 --network  container:net1 --rm busybox
+```
+
+#### 宿主机与容器共享ip
+```
+docker run -it --name net3 --network host --rm busybox
+```
+在network中  和 在宿主机中的 ifconfig内容相同
+代表连接到了同一块网卡上
+**这种方式比桥接暴露端口的好处是可以减少一次nat转换,提高访问效率**
+
