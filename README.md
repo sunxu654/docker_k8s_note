@@ -1,68 +1,69 @@
->原创笔记  转载请先征求本人同意 
-
+>第一次使用markdown做笔记,以后会努力做得更好的~
+>前半段笔记用的是markdownpad+imgur,直到发现了VScode,才知道什么叫做神器...
 <!-- TOC -->
 
-- [容器技术的发展史](#容器技术的发展史)
-    - [传统的容器技术是虚拟机技术,它的虚拟化方式有两种](#传统的容器技术是虚拟机技术它的虚拟化方式有两种)
-    - [新的容器技术是利用命名空间,对内核进行虚拟化,减少了资源浪费](#新的容器技术是利用命名空间对内核进行虚拟化减少了资源浪费)
-    - [docker的一些优点](#docker的一些优点)
-    - [docker杂谈](#docker杂谈)
-- [docker的基本使用](#docker的基本使用)
-    - [docker的架构组成](#docker的架构组成)
-    - [镜像仓库的存放准则](#镜像仓库的存放准则)
-    - [一个镜像仓库只存放一个应用程序的不同版本镜像,比如nginx的不同版本](#一个镜像仓库只存放一个应用程序的不同版本镜像比如nginx的不同版本)
-    - [docker安装杂记](#docker安装杂记)
-    - [清华镜像站里面可以查看镜像的内部文件 可以从centos7中发现,cent7的extras中带有一个老版本docker](#清华镜像站里面可以查看镜像的内部文件-可以从centos7中发现cent7的extras中带有一个老版本docker)
-    - [docker 常用命令:](#docker-常用命令)
-    - [可以选择的镜像标签:](#可以选择的镜像标签)
-    - [docker的虚拟网络](#docker的虚拟网络)
-    - [docker的基本使用](#docker的基本使用-1)
-    - [docker镜像的底层原理](#docker镜像的底层原理)
-- [docker 制作镜像](#docker-制作镜像)
-    - [基于容器制作镜像](#基于容器制作镜像)
-    - [docker镜像与TAG的硬链接原理](#docker镜像与tag的硬链接原理)
-    - [将镜像push到仓库中](#将镜像push到仓库中)
-    - [push的 账号/镜像名:TAG   应该与账号和远程仓库名对应](#push的-账号镜像名tag---应该与账号和远程仓库名对应)
-    - [镜像的导入导出](#镜像的导入导出)
-    - [跨过pull 镜像,在两台服务器间传递打包的文件(不常用)](#跨过pull-镜像在两台服务器间传递打包的文件不常用)
-- [容器的虚拟网络模型](#容器的虚拟网络模型)
-    - [容器的四种虚拟网络模型](#容器的四种虚拟网络模型)
-    - [bridge模型](#bridge模型)
-    - [容器的虚拟网卡与docker0相连](#容器的虚拟网卡与docker0相连)
-    - [可以看到有三个容器的网卡与docker0相连](#可以看到有三个容器的网卡与docker0相连)
-    - [docker容器桥接模式暴露端口](#docker容器桥接模式暴露端口)
-    - [修改docker0(docker daemon)的ip地址](#修改docker0docker-daemon的ip地址)
-    - [docker容器共享模式](#docker容器共享模式)
-    - [容器间共享ip](#容器间共享ip)
-    - [宿主机与容器共享ip](#宿主机与容器共享ip)
-- [docker存储卷](#docker存储卷)
-    - [docker存储卷挂载到宿主机](#docker存储卷挂载到宿主机)
-    - [docker容器间共享宿主机存储](#docker容器间共享宿主机存储)
-    - [docker容器复制其他容器的存储卷](#docker容器复制其他容器的存储卷)
-- [DockerFile的制作](#dockerfile的制作)
-    - [构建镜像语法](#构建镜像语法)
-    - [FROM](#from)
-    - [LABEL](#label)
-    - [COPY](#copy)
-    - [ADD](#add)
-    - [WORKDIR](#workdir)
-    - [VOLUME](#volume)
-    - [EXPOSE](#expose)
-    - [ENV](#env)
-    - [RUN & CMD](#run--cmd)
-    - [ENTRYPOINT](#entrypoint)
+- [1. 容器技术的发展史](#1-容器技术的发展史)
+    - [1.1. 传统的容器技术是虚拟机技术,它的虚拟化方式有两种](#11-传统的容器技术是虚拟机技术它的虚拟化方式有两种)
+    - [1.2. 新的容器技术是利用命名空间,对内核进行虚拟化,减少了资源浪费](#12-新的容器技术是利用命名空间对内核进行虚拟化减少了资源浪费)
+    - [1.3. docker的一些优点](#13-docker的一些优点)
+    - [1.4. docker杂谈](#14-docker杂谈)
+- [2. docker的基本使用](#2-docker的基本使用)
+    - [2.1. docker的架构组成](#21-docker的架构组成)
+    - [2.2. 镜像仓库的存放准则](#22-镜像仓库的存放准则)
+    - [2.3. 一个镜像仓库只存放一个应用程序的不同版本镜像,比如nginx的不同版本](#23-一个镜像仓库只存放一个应用程序的不同版本镜像比如nginx的不同版本)
+    - [2.4. docker安装杂记](#24-docker安装杂记)
+    - [2.5. 清华镜像站里面可以查看镜像的内部文件 可以从centos7中发现,cent7的extras中带有一个老版本docker](#25-清华镜像站里面可以查看镜像的内部文件-可以从centos7中发现cent7的extras中带有一个老版本docker)
+    - [2.6. docker 常用命令:](#26-docker-常用命令)
+    - [2.7. 可以选择的镜像标签:](#27-可以选择的镜像标签)
+    - [2.8. docker的虚拟网络](#28-docker的虚拟网络)
+    - [2.9. docker的基本使用](#29-docker的基本使用)
+    - [2.10. docker镜像的底层原理](#210-docker镜像的底层原理)
+- [3. docker 制作镜像](#3-docker-制作镜像)
+    - [3.1. 基于容器制作镜像](#31-基于容器制作镜像)
+    - [3.2. docker镜像与TAG的硬链接原理](#32-docker镜像与tag的硬链接原理)
+    - [3.3. 将镜像push到仓库中](#33-将镜像push到仓库中)
+    - [3.4. push的 账号/镜像名:TAG   应该与账号和远程仓库名对应](#34-push的-账号镜像名tag---应该与账号和远程仓库名对应)
+    - [3.5. 镜像的导入导出](#35-镜像的导入导出)
+    - [3.6. 跨过pull 镜像,在两台服务器间传递打包的文件(不常用)](#36-跨过pull-镜像在两台服务器间传递打包的文件不常用)
+- [4. 容器的虚拟网络模型](#4-容器的虚拟网络模型)
+    - [4.1. 容器的四种虚拟网络模型](#41-容器的四种虚拟网络模型)
+    - [4.2. bridge模型](#42-bridge模型)
+    - [4.3. 容器的虚拟网卡与docker0相连](#43-容器的虚拟网卡与docker0相连)
+    - [4.4. 可以看到有三个容器的网卡与docker0相连](#44-可以看到有三个容器的网卡与docker0相连)
+    - [4.5. docker容器桥接模式暴露端口](#45-docker容器桥接模式暴露端口)
+    - [4.6. 修改docker0(docker daemon)的ip地址](#46-修改docker0docker-daemon的ip地址)
+    - [4.7. docker容器共享模式](#47-docker容器共享模式)
+    - [4.8. 容器间共享ip](#48-容器间共享ip)
+    - [4.9. 宿主机与容器共享ip](#49-宿主机与容器共享ip)
+- [5. docker存储卷](#5-docker存储卷)
+    - [5.1. docker存储卷挂载到宿主机](#51-docker存储卷挂载到宿主机)
+    - [5.2. docker容器间共享宿主机存储](#52-docker容器间共享宿主机存储)
+    - [5.3. docker容器复制其他容器的存储卷](#53-docker容器复制其他容器的存储卷)
+- [6. DockerFile的制作](#6-dockerfile的制作)
+    - [6.1. 构建镜像语法](#61-构建镜像语法)
+    - [6.2. FROM](#62-from)
+    - [6.3. LABEL](#63-label)
+    - [6.4. COPY](#64-copy)
+    - [6.5. ADD](#65-add)
+    - [6.6. WORKDIR](#66-workdir)
+    - [6.7. VOLUME](#67-volume)
+    - [6.8. EXPOSE](#68-expose)
+    - [6.9. ENV](#69-env)
+    - [6.10. RUN & CMD](#610-run--cmd)
+    - [6.11. ENTRYPOINT](#611-entrypoint)
 
 <!-- /TOC -->
-# 容器技术的发展史
 
-## 传统的容器技术是虚拟机技术,它的虚拟化方式有两种
+# 1. 容器技术的发展史
+
+## 1.1. 传统的容器技术是虚拟机技术,它的虚拟化方式有两种
 
 1. 在宿主机上虚拟出多个内核,在内核上分别创建虚拟机;
 2. 直接在硬件资源上创建内核(跳过宿主机系统),在内核上创建虚拟机;
 
 **这样会造成严重的资源浪费,哪怕只想运行一个web服务,都要虚拟出一个主机**
 
-## 新的容器技术是利用命名空间,对内核进行虚拟化,减少了资源浪费
+## 1.2. 新的容器技术是利用命名空间,对内核进行虚拟化,减少了资源浪费
 
 命名空间的分类如图:
 ![](https://i.imgur.com/GyorsNf.jpg)
@@ -74,7 +75,7 @@ LXC技术是利用自己创建的模板,对内核进行命名空间的划分,然
 
 所以就诞生了docker技术,docker技术的底层其实就是LXC,它其实是对LXC技术的封装;
 
-## docker的一些优点
+## 1.3. docker的一些优点
 
 它相对于LXC的一大优点是可以很轻松的创建和自定义镜像,存储在云仓库中,在使用的时候拉取运行即可;
 
@@ -85,7 +86,7 @@ docker在**一个容器中只运行一个进程**,进程之间通过容器的方
 docker的联合挂载机制(极大的优点)
 ![](https://i.imgur.com/cggenCn.jpg)
 
-## docker杂谈
+## 1.4. docker杂谈
 
 google早在十年前就秘密使用了docker技术
 后来docker公司为了盈利,发布了容器编排工具(实现容器的资源管理),但此时google也有对应的开源技术k8s公布于世,因为google丰富的容器使用经验,使得k8s碾压docker的容器编排工具
@@ -96,9 +97,9 @@ docker在发展壮大起来后,开发了新的引擎libcontainer,抛弃了原来
 
 容器技术的使用需要制定行业标准,CNCF完全有能力制定标准,而且为了保证不被docker一家公司控制,CNCF将docker排除在外,但是也给了docker一个改过自新的机会,让docker把自己开发的新引擎libcontainner更名为runC作为**容器技术引擎的标准**
 
-# docker的基本使用
+# 2. docker的基本使用
 
-## docker的架构组成
+## 2.1. docker的架构组成
 ![](https://i.imgur.com/bfIaGOg.jpg)
 
 daemon:守护进程(后台进程)  用来拉取镜像和运行容器(容器是镜像的一个动态实例)
@@ -106,48 +107,48 @@ docker client : docker的客户终端
 docker register: docker仓库 (用来存放镜像) + 用户认证功能
 
 
-## 镜像仓库的存放准则
+## 2.2. 镜像仓库的存放准则
 
-## 一个镜像仓库只存放一个应用程序的不同版本镜像,比如nginx的不同版本
+## 2.3. 一个镜像仓库只存放一个应用程序的不同版本镜像,比如nginx的不同版本
 ![](https://i.imgur.com/ToQhqI0.jpg)
 
-## docker安装杂记
+## 2.4. docker安装杂记
 
 
-## 清华镜像站里面可以查看镜像的内部文件 可以从centos7中发现,cent7的extras中带有一个老版本docker
+## 2.5. 清华镜像站里面可以查看镜像的内部文件 可以从centos7中发现,cent7的extras中带有一个老版本docker
 ![](https://i.imgur.com/7OcTbKR.jpg) 
 
 
 也可以从清华镜像站中,找到docker-ce镜像:
 ![](https://i.imgur.com/3CUOmzz.jpg)
 
-## docker 常用命令:
+## 2.6. docker 常用命令:
 
 ![](https://i.imgur.com/e0L05uf.jpg)
 
-## 可以选择的镜像标签:
+## 2.7. 可以选择的镜像标签:
 
 ![](https://i.imgur.com/9q30KdP.jpg)
 
 alpine:是轻量版,缺少测试工具,不建议使用
 
-## docker的虚拟网络
+## 2.8. docker的虚拟网络
 
 ![](https://i.imgur.com/mCmgWe9.jpg)
 ![](https://i.imgur.com/amxF17N.jpg)
 
-## docker的基本使用
+## 2.9. docker的基本使用
 
 ![](https://i.imgur.com/jBYZSbH.jpg )
-## docker镜像的底层原理
+## 2.10. docker镜像的底层原理
 
 ![](https://i.imgur.com/ZfHdJ3R.jpg)
 
-# docker 制作镜像
+# 3. docker 制作镜像
 
 ![](https://i.imgur.com/lb6uT07.jpg)
 
-## 基于容器制作镜像
+## 3.1. 基于容器制作镜像
 
 ```linux
 [root@sx ~]# docker ps
@@ -177,34 +178,34 @@ centos              latest              9f38484d220f        2 months ago        
 registry            latest              f32a97de94e1        2 months ago        25.8MB
 hello-world         latest              fce289e99eb9        5 months ago        1.84kB
 ```
-## docker镜像与TAG的硬链接原理
+## 3.2. docker镜像与TAG的硬链接原理
 
 ![](https://i.imgur.com/W5G8f3P.jpg)
 
-## 将镜像push到仓库中
-## push的 账号/镜像名:TAG   应该与账号和远程仓库名对应
+## 3.3. 将镜像push到仓库中
+## 3.4. push的 账号/镜像名:TAG   应该与账号和远程仓库名对应
 ![](https://i.imgur.com/BaJwVuM.jpg)
 
-## 镜像的导入导出
+## 3.5. 镜像的导入导出
 
-## 跨过pull 镜像,在两台服务器间传递打包的文件(不常用)
+## 3.6. 跨过pull 镜像,在两台服务器间传递打包的文件(不常用)
 
 ![](https://i.imgur.com/i2m8Ue3.jpg)
 
-# 容器的虚拟网络模型
-## 容器的四种虚拟网络模型
+# 4. 容器的虚拟网络模型
+## 4.1. 容器的四种虚拟网络模型
 
 ![](https://i.imgur.com/xv2oaXd.jpg)
 
-## bridge模型
+## 4.2. bridge模型
 ![](https://i.imgur.com/TCnBBzn.jpg)
 
-## 容器的虚拟网卡与docker0相连
+## 4.3. 容器的虚拟网卡与docker0相连
 
 
 ![](https://i.imgur.com/4ruwDP8.jpg)
 
-## 可以看到有三个容器的网卡与docker0相连
+## 4.4. 可以看到有三个容器的网卡与docker0相连
 ![](https://i.imgur.com/0wu5Llz.jpg)
 ![](https://i.imgur.com/B0KgT18.jpg)
 ```
@@ -215,11 +216,11 @@ docker run -it --name containername  --network bridge  -h sunxu.com --dns 8.8.8.
 
 #上面的参数可以在docker容器的 /etc/resolv.conf中找到
 ```
-## docker容器桥接模式暴露端口
+## 4.5. docker容器桥接模式暴露端口
 docker run -it --name test -p 192.168.30.70:5432:5432 redis
 ![](https://i.imgur.com/V11fPXQ.jpg)
 ![](https://i.imgur.com/rOamxv6.jpg)
-## 修改docker0(docker daemon)的ip地址
+## 4.6. 修改docker0(docker daemon)的ip地址
 ```
 vim /etc/docker/daemon.json
 
@@ -250,8 +251,8 @@ ens33: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
 ```
 
 
-## docker容器共享模式
-## 容器间共享ip
+## 4.7. docker容器共享模式
+## 4.8. 容器间共享ip
 
 ```
 开启container1
@@ -260,7 +261,7 @@ docker run -it --name net1 --rm busybox
 docker run -it --name net2 --network  container:net1 --rm busybox
 ```
 
-## 宿主机与容器共享ip
+## 4.9. 宿主机与容器共享ip
 ```
 docker run -it --name net3 --network host --rm busybox
 ```
@@ -268,24 +269,24 @@ docker run -it --name net3 --network host --rm busybox
 代表连接到了同一块网卡上
 **这种方式比桥接暴露端口的好处是可以减少一次nat转换,提高访问效率**
 
-# docker存储卷
+# 5. docker存储卷
 
 ![](https://i.imgur.com/8gxJvcP.jpg)
 
-## docker存储卷挂载到宿主机
+## 5.1. docker存储卷挂载到宿主机
 ```
 docker run -it -v /host/data/valume1:/data --name valume1 -rm busybox
 ```
-## docker容器间共享宿主机存储
+## 5.2. docker容器间共享宿主机存储
 ```
 docker run -it -v /host/data/valume1:/data --name valume2 -rm busybox
 ```
-## docker容器复制其他容器的存储卷
+## 5.3. docker容器复制其他容器的存储卷
 ```
 docker run -it --volumers-from valume2 --name valume3 -rm busybox
 ```
 
-# DockerFile的制作
+# 6. DockerFile的制作
 
 要求
 + 创建一个目录来存储相关文件和依赖
@@ -297,23 +298,23 @@ docker build原理
 + docker commit:容器其实是在镜像之上联合挂在一个可写层,在在基于容器制作镜像的时候把可写层打包
 + docker build: 基于DockerFile,其实也会私下启动一个容器,打包的也是镜像之上的可写层,只不过是对用户不可见得
 
-## 构建镜像语法
-## FROM
+## 6.1. 构建镜像语法
+## 6.2. FROM
 ![](https://i.imgur.com/aozDUOl.jpg)
-## LABEL
+## 6.3. LABEL
 提供作者,邮箱等标签信息
 ![](https://i.imgur.com/gN3MzXb.jpg)
 
-## COPY
+## 6.4. COPY
 ![](https://i.imgur.com/SqRLrQr.jpg)
-## ADD
+## 6.5. ADD
 ![](https://i.imgur.com/ZzW77cF.jpg)
-## WORKDIR
+## 6.6. WORKDIR
 指定docker容器的工作目录
 ![](https://i.imgur.com/AR9IHgm.jpg)
-## VOLUME
+## 6.7. VOLUME
 ![](https://i.imgur.com/ZoUqa6e.jpg)
-## EXPOSE
+## 6.8. EXPOSE
 ![](https://i.imgur.com/H2nXn0U.jpg)
 
 ```
@@ -326,9 +327,9 @@ docker inspect dockertest
 #访问对应的端口
 curl <容器的ip>:8080
 ```
-## ENV
+## 6.9. ENV
 ![](https://i.imgur.com/GFxCPax.jpg)
-## RUN & CMD 
+## 6.10. RUN & CMD 
 + run和cmd的运行时间不同
 +  运行行为也不同,run可以有多个,cmd可以存在多个但只有最后一个生效
 ![](https://i.imgur.com/zU3AfkZ.jpg)
@@ -340,7 +341,7 @@ curl <容器的ip>:8080
 run和cmd的第一种命令格式  run/cmd  command  是以"/bin/sh/ -c"来启动主进程,保留了shell特性,但主进程pid不再是1
 
 第二种命令格式 run/cmd ["<executable>","<param1>","<param2>"] 是以内核来启动主进程,主进程pid为1,但无法保留shell的特性
-## ENTRYPOINT 
+## 6.11. ENTRYPOINT 
 容器中的主进程要保证pid为1,这样才能接收到docker stop等命令
 
 同时要保证拥有重定向,管道等shell父进程的特性
