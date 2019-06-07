@@ -1,5 +1,7 @@
->第一次使用markdown做笔记,以后会努力做得更好的~
->前半段笔记用的是markdownpad+imgur,直到发现了VScode,才知道什么叫做神器...
+前言
++ 第一次做markdown笔记,以后会努力做得更好的~
++ 前半段笔记用的是markdownpad+imgur,直到发现了VScode,才知道什么叫做神器...
+
 <!-- TOC -->
 
 - [1. 容器技术的发展史](#1-容器技术的发展史)
@@ -24,7 +26,7 @@
     - [3.3. 将镜像push到仓库中](#33-将镜像push到仓库中)
     - [3.4. push的 账号/镜像名:TAG   应该与账号和远程仓库名对应](#34-push的-账号镜像名tag---应该与账号和远程仓库名对应)
     - [3.5. 镜像的导入导出](#35-镜像的导入导出)
-    - [3.6. 跨过pull 镜像,在两台服务器间传递打包的文件(不常用)](#36-跨过pull-镜像在两台服务器间传递打包的文件不常用)
+    - [3.6. 跨过pull 镜像,在两台服务器间传递打包的文件](#36-跨过pull-镜像在两台服务器间传递打包的文件)
 - [4. 容器的虚拟网络模型](#4-容器的虚拟网络模型)
     - [4.1. 容器的四种虚拟网络模型](#41-容器的四种虚拟网络模型)
     - [4.2. bridge模型](#42-bridge模型)
@@ -53,6 +55,9 @@
     - [6.11. ENTRYPOINT](#611-entrypoint)
 
 <!-- /TOC -->
+
+
+
 
 # 1. 容器技术的发展史
 
@@ -102,9 +107,9 @@ docker在发展壮大起来后,开发了新的引擎libcontainer,抛弃了原来
 ## 2.1. docker的架构组成
 ![](https://i.imgur.com/bfIaGOg.jpg)
 
-daemon:守护进程(后台进程)  用来拉取镜像和运行容器(容器是镜像的一个动态实例)
-docker client : docker的客户终端
-docker register: docker仓库 (用来存放镜像) + 用户认证功能
++ daemon:守护进程(后台进程)  用来拉取镜像和运行容器(容器是镜像的一个动态实例)
++ docker client : docker的客户终端
++ docker register: docker仓库 (用来存放镜像) + 用户认证功能
 
 
 ## 2.2. 镜像仓库的存放准则
@@ -188,7 +193,7 @@ hello-world         latest              fce289e99eb9        5 months ago        
 
 ## 3.5. 镜像的导入导出
 
-## 3.6. 跨过pull 镜像,在两台服务器间传递打包的文件(不常用)
+## 3.6. 跨过pull 镜像,在两台服务器间传递打包的文件
 
 ![](https://i.imgur.com/i2m8Ue3.jpg)
 
@@ -330,6 +335,7 @@ curl <容器的ip>:8080
 ## 6.9. ENV
 ![](https://i.imgur.com/GFxCPax.jpg)
 ## 6.10. RUN & CMD 
+run与cmd的区别
 + run和cmd的运行时间不同
 +  运行行为也不同,run可以有多个,cmd可以存在多个但只有最后一个生效
 ![](https://i.imgur.com/zU3AfkZ.jpg)
@@ -342,19 +348,14 @@ run和cmd的第一种命令格式  run/cmd  command  是以"/bin/sh/ -c"来启�
 
 第二种命令格式 run/cmd ["<executable>","<param1>","<param2>"] 是以内核来启动主进程,主进程pid为1,但无法保留shell的特性
 ## 6.11. ENTRYPOINT 
-容器中的主进程要保证pid为1,这样才能接收到docker stop等命令
+容器中的主进程要保证pid为1,这样才能接收到docker stop等命令;同时要保证拥有重定向,管道等shell父进程的特性
 
-同时要保证拥有重定向,管道等shell父进程的特性
+但pid为1的进程是由内核启动的,将失去shell的特性;由shell启动保留了特性,但是主进程变成了shell
 
-但pid为1的进程是由内核启动的,将失去shell的特性
+所以现在的问题是,如何让容器中的主进程的pid是1,同时又让主进程拥有shell的特性;采用的方法是 exec commond,用exec来顶替shell的位置,启动主进程
 
-由shell启动保留了特性,但是主进程变成了shell
+exec顶替shell启动主进程:
 
-所以现在的问题是,如何让容器中的主进程的pid是1,同时又让主进程拥有shell的特性
-
-采用的方法是 exec commond,用exec来顶替shell的位置,启动主进程
-
-测试
 ![](https://i.imgur.com/0rhTtSE.jpg)
 
 ![](https://i.imgur.com/hQm3yTP.jpg)
@@ -367,4 +368,3 @@ run和cmd的第一种命令格式  run/cmd  command  是以"/bin/sh/ -c"来启�
 
 ![pic](pic/1559910908(1).jpg)
 
-测试vscode git
