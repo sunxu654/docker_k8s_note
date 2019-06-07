@@ -1,4 +1,5 @@
 >原创笔记  转载请先征求本人同意 
+
 <!-- TOC -->
 
 - [容器技术的发展史](#容器技术的发展史)
@@ -54,15 +55,12 @@
 <!-- /TOC -->
 # 容器技术的发展史
 
-
 ## 传统的容器技术是虚拟机技术,它的虚拟化方式有两种
 
 1. 在宿主机上虚拟出多个内核,在内核上分别创建虚拟机;
 2. 直接在硬件资源上创建内核(跳过宿主机系统),在内核上创建虚拟机;
 
-
 **这样会造成严重的资源浪费,哪怕只想运行一个web服务,都要虚拟出一个主机**
-
 
 ## 新的容器技术是利用命名空间,对内核进行虚拟化,减少了资源浪费
 
@@ -71,6 +69,7 @@
 因为用户命名空间在linux的支持版本较晚,也据定了centos6的内核版本不适合用docker,即使高版本内核可用也很不稳定;
 
 因为虚拟机技术的资源浪费,由此诞生了第一种使用同一个内核,而不需要再分离出多个内核(节省资源)的容器技术Linux Container
+
 LXC技术是利用自己创建的模板,对内核进行命名空间的划分,然后生成一个容器,在容器内运行多个进程,但这样有一个缺点是生成的容器内的数据很难迁移,模板生成也十分复杂;
 
 所以就诞生了docker技术,docker技术的底层其实就是LXC,它其实是对LXC技术的封装;
@@ -192,7 +191,6 @@ hello-world         latest              fce289e99eb9        5 months ago        
 
 ![](https://i.imgur.com/i2m8Ue3.jpg)
 
-
 # 容器的虚拟网络模型
 ## 容器的四种虚拟网络模型
 
@@ -249,14 +247,12 @@ ens33: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
         RX errors 0  dropped 0  overruns 0  frame 0
         TX packets 317  bytes 50079 (48.9 KiB)
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-
-
-
 ```
 
 
 ## docker容器共享模式
 ## 容器间共享ip
+
 ```
 开启container1
 docker run -it --name net1 --rm busybox
@@ -342,15 +338,19 @@ curl <容器的ip>:8080
 ![](https://i.imgur.com/l5AoD7g.jpg)
 
 run和cmd的第一种命令格式  run/cmd  command  是以"/bin/sh/ -c"来启动主进程,保留了shell特性,但主进程pid不再是1
+
 第二种命令格式 run/cmd ["<executable>","<param1>","<param2>"] 是以内核来启动主进程,主进程pid为1,但无法保留shell的特性
 ## ENTRYPOINT 
 容器中的主进程要保证pid为1,这样才能接收到docker stop等命令
+
 同时要保证拥有重定向,管道等shell父进程的特性
 
 但pid为1的进程是由内核启动的,将失去shell的特性
+
 由shell启动保留了特性,但是主进程变成了shell
 
 所以现在的问题是,如何让容器中的主进程的pid是1,同时又让主进程拥有shell的特性
+
 采用的方法是 exec commond,用exec来顶替shell的位置,启动主进程
 
 测试
