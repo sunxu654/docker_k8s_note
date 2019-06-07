@@ -365,3 +365,5 @@ run和cmd的第一种命令格式  run/cmd  command  是以"/bin/sh/ -c"来启�
 ![](https://i.imgur.com/90K6i2J.jpg)
 
 ![pic](pic/1559910908(1).jpg)
+
+测试vscode git
