@@ -1,6 +1,6 @@
 >原创笔记  转载请先征求本人同意 
 
-# docker_k8s_note
+# docker_note
 
 # docker的原理与使用
 
@@ -224,3 +224,65 @@ docker run -it --name net3 --network host --rm busybox
 代表连接到了同一块网卡上
 **这种方式比桥接暴露端口的好处是可以减少一次nat转换,提高访问效率**
 
+## docker存储卷
+
+![](https://i.imgur.com/8gxJvcP.jpg)
+
+### docker存储卷挂载到宿主机
+```
+docker run -it -v /host/data/valume1:/data --name valume1 -rm busybox
+```
+### docker容器间共享宿主机存储
+```
+docker run -it -v /host/data/valume1:/data --name valume2 -rm busybox
+```
+### docker容器复制其他容器的存储卷
+```
+docker run -it --volumers-from valume2 --name valume3 -rm busybox
+```
+
+## DockerFile的制作
+
+要求
++ 创建一个目录来存储相关文件和依赖
++ DockerFile文件首字母大写
++ 文件内容推荐大写
+
+docker build原理
+
++ docker commit:容器其实是在镜像之上联合挂在一个可写层,在在基于容器制作镜像的时候把可写层打包
++ docker build: 基于DockerFile,其实也会私下启动一个容器,打包的也是镜像之上的可写层,只不过是对用户不可见得
+
+### 构建镜像语法
+#### FROM
+![](https://i.imgur.com/aozDUOl.jpg)
+#### LABEL
+提供作者,邮箱等标签信息
+![](https://i.imgur.com/gN3MzXb.jpg)
+
+#### COPY
+![](https://i.imgur.com/SqRLrQr.jpg)
+#### ADD
+![](https://i.imgur.com/ZzW77cF.jpg)
+#### WORKDIR
+指定docker容器的工作目录
+![](https://i.imgur.com/AR9IHgm.jpg)
+#### VOLUME
+![](https://i.imgur.com/ZoUqa6e.jpg)
+#### EXPOSE
+![](https://i.imgur.com/H2nXn0U.jpg)
+
+```
+#构建一个暴露80端口的镜像
+docker build -t testimage:v1 ./
+#启动镜像时,用8080端口绑定到暴露的80端口上面
+docker run --name dockertest --rm -p8080:80 testimage:v1 /bin/httpd -f -h /root/web/html/
+#查看容器的ip
+docker inspect dockertest
+#访问对应的端口
+curl <容器的ip>:8080
+```
+#### ENV
+![](https://i.imgur.com/GFxCPax.jpg)
+#### RUN & CMD
+![](https://i.imgur.com/zU3AfkZ.jpg)
