@@ -284,5 +284,34 @@ curl <容器的ip>:8080
 ```
 #### ENV
 ![](https://i.imgur.com/GFxCPax.jpg)
-#### RUN & CMD
+#### RUN & CMD 
++ run和cmd的运行时间不同
++  运行行为也不同,run可以有多个,cmd可以存在多个但只有最后一个生效
 ![](https://i.imgur.com/zU3AfkZ.jpg)
+
+
+![](https://i.imgur.com/1Sd7BW4.jpg)
+![](https://i.imgur.com/l5AoD7g.jpg)
+
+run和cmd的第一种命令格式  run/cmd  command  是以"/bin/sh/ -c"来启动主进程,保留了shell特性,但主进程pid不再是1
+第二种命令格式 run/cmd ["<executable>","<param1>","<param2>"] 是以内核来启动主进程,主进程pid为1,但无法保留shell的特性
+#### ENTRYPOINT 
+容器中的主进程要保证pid为1,这样才能接收到docker stop等命令
+同时要保证拥有重定向,管道等shell父进程的特性
+
+但pid为1的进程是由内核启动的,将失去shell的特性
+由shell启动保留了特性,但是主进程变成了shell
+
+所以现在的问题是,如何让容器中的主进程的pid是1,同时又让主进程拥有shell的特性
+采用的方法是 exec commond,用exec来顶替shell的位置,启动主进程
+
+测试
+![](https://i.imgur.com/0rhTtSE.jpg)
+
+![](https://i.imgur.com/hQm3yTP.jpg)
+
+![](https://i.imgur.com/YTOxcf9.jpg)
+
+![](https://i.imgur.com/XbpblK5.png)
+
+![](https://i.imgur.com/QHdQJMd.jpg)
