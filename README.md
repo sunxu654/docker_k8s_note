@@ -1,6 +1,7 @@
 前言
++ 原创学习笔记
 + 第一次做markdown笔记,以后会努力做得更好的~
-+ 前半段笔记用的是markdownpad+imgur,直到发现了VScode,才知道什么叫做神器...
++ 前半段用的是markdownpad+imgur,直到发现了VScode,才知道什么叫做神器...
 
 <!-- TOC -->
 
@@ -17,7 +18,7 @@
     - [2.5. 清华镜像站里面可以查看镜像的内部文件 可以从centos7中发现,cent7的extras中带有一个老版本docker](#25-清华镜像站里面可以查看镜像的内部文件-可以从centos7中发现cent7的extras中带有一个老版本docker)
     - [2.6. docker 常用命令:](#26-docker-常用命令)
     - [2.7. 可以选择的镜像标签:](#27-可以选择的镜像标签)
-    - [2.8. docker的虚拟网络](#28-docker的虚拟网络)
+    - [2.8. docker的虚拟网卡](#28-docker的虚拟网卡)
     - [2.9. docker的基本使用](#29-docker的基本使用)
     - [2.10. docker镜像的底层原理](#210-docker镜像的底层原理)
 - [3. docker 制作镜像](#3-docker-制作镜像)
@@ -55,9 +56,6 @@
     - [6.11. ENTRYPOINT](#611-entrypoint)
 
 <!-- /TOC -->
-
-
-
 
 # 1. 容器技术的发展史
 
@@ -137,7 +135,7 @@ docker在发展壮大起来后,开发了新的引擎libcontainer,抛弃了原来
 
 alpine:是轻量版,缺少测试工具,不建议使用
 
-## 2.8. docker的虚拟网络
+## 2.8. docker的虚拟网卡
 
 ![](https://i.imgur.com/mCmgWe9.jpg)
 ![](https://i.imgur.com/amxF17N.jpg)
