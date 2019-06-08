@@ -3,6 +3,7 @@
 + 第一次做markdown笔记,以后会努力做得更好的~
 + 前半段用的是markdownpad+imgur,直到发现了VScode,才知道什么叫做神器...
 
+
 <!-- TOC -->
 
 - [1. 容器技术的发展史](#1-容器技术的发展史)
@@ -54,6 +55,13 @@
     - [6.9. ENV](#69-env)
     - [6.10. RUN & CMD](#610-run--cmd)
     - [6.11. ENTRYPOINT](#611-entrypoint)
+        - [exec顶替shell启动主进程:](#exec顶替shell启动主进程)
+        - [ENTRYPOINT的使用](#entrypoint的使用)
+            - [cmd和entrypoint的区别](#cmd和entrypoint的区别)
+    - [HEALTHCHECK](#healthcheck)
+    - [SHELL](#shell)
+    - [STOPSIGNAL](#stopsignal)
+    - [ONBUILD](#onbuild)
 
 <!-- /TOC -->
 
@@ -352,7 +360,7 @@ run和cmd的第一种命令格式  run/cmd  command  是以"/bin/sh/ -c"来启�
 
 所以现在的问题是,如何让容器中的主进程的pid是1,同时又让主进程拥有shell的特性;采用的方法是 exec commond,用exec来顶替shell的位置,启动主进程
 
-exec顶替shell启动主进程:
+### exec顶替shell启动主进程:
 
 ![](https://i.imgur.com/0rhTtSE.jpg)
 
@@ -364,5 +372,42 @@ exec顶替shell启动主进程:
 
 ![](https://i.imgur.com/90K6i2J.jpg)
 
-![pic](pic/1559910908(1).jpg)
+![](pic/1559910908(1).jpg)
+
+![](pic/Snipaste_2019-06-08_09-44-18.jpg)
+
+![](pic/Snipaste_2019-06-08_09-45-48.jpg)
+### ENTRYPOINT的使用
+#### cmd和entrypoint的区别
+![](pic/Snipaste_2019-06-08_09-59-36.jpg)
+**但是entrypoint可以被docker run后面的 --entrypoint + "command"给重新定义**
+![](pic/Snipaste_2019-06-08_10-30-22.jpg)
+
+![](pic/Snipaste_2019-06-08_10-32-42.jpg)
+
+## HEALTHCHECK
+
+容器的健康与否不能只通过主进程是否运行判断,比如主进程处于死循环,无法实现预期功能,则它是不健康的
+
+可以定义一个HEALTHCHECK来检验容器是否健康
+![](pic/Snipaste_2019-06-08_10-36-55.jpg)
+
+![](pic/Snipaste_2019-06-08_10-40-28.jpg)
+
+![](pic/Snipaste_2019-06-08_10-41-29.jpg)
+
+## SHELL
+
+修改运行的shell 为其他的shell,比如win下的power shell
+
+![](pic/Snipaste_2019-06-08_10-43-21.jpg)
+## STOPSIGNAL
+
+定义docker容器停止的信号值
+
+![](pic/Snipaste_2019-06-08_10-44-37.jpg)
+
+## ONBUILD
+
+![](pic/Snipaste_2019-06-08_10-51-38.jpg)
 
