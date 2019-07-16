@@ -45,6 +45,7 @@
     - [4.7. docker容器共享模式](#47-docker容器共享模式)
     - [4.8. 容器间共享ip](#48-容器间共享ip)
     - [4.9. 宿主机与容器共享ip](#49-宿主机与容器共享ip)
+    - [自定义network桥接模式(推荐)](#自定义network桥接模式推荐)
 - [5. docker存储卷](#5-docker存储卷)
     - [5.1. docker存储卷挂载到宿主机](#51-docker存储卷挂载到宿主机)
     - [5.2. docker容器间共享宿主机存储](#52-docker容器间共享宿主机存储)
@@ -320,6 +321,10 @@ docker run -it --name net3 --network host --rm busybox
 在network中  和 在宿主机中的 ifconfig内容相同
 代表连接到了同一块网卡上
 **这种方式比桥接暴露端口的好处是可以减少一次nat转换,提高访问效率**
+
+## 自定义network桥接模式(推荐)
+
+[参考博客](https://www.cnkirito.moe/docker-network-bridge/)
 
 # 5. docker存储卷
 
